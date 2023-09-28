@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class Schedule</title>
+    <style>
+        /* Add CSS styling here */
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Class Schedule</h2>
+
+<!-- Class Schedule Table -->
+<table>
+    <tr>
+        <th>EDUCATION</th>
+        <th>SCHEDULED DATE</th>
+    </tr>
+    <tr>
+        <td>EDU # 1</td>
+        <td><input type="date" id="startDate" onchange="calculateDates()"></td>
+    </tr>
+    <!-- Rows for subsequent dates will be added by JavaScript -->
+</table>
+
+<script>
+function calculateDates() {
+    // Get the start date from the input field
+    const startDate = new Date(document.getElementById('startDate').value);
+    
+    // Get the table to add rows for subsequent dates
+    const table = document.querySelector('table');
+    
+    // Clear any previously added rows
+    while (table.rows.length > 2) {
+        table.deleteRow(2);
+    }
+    
+    // Calculate and add rows for the next 11 dates (EDU # 2 to EDU # 12)
+    for (let i = 2; i <= 12; i++) {
+        // Calculate the next date by adding 7 days to the previous date
+        const nextDate = new Date(startDate);
+        nextDate.setDate(nextDate.getDate() + 7 * (i - 1));
+        
+        // Format the date to YYYY-MM-DD
+        const formattedDate = nextDate.toISOString().split('T')[0];
+        
+        // Add a new row to the table with the calculated date
+        const row = table.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        cell1.textContent = `EDU # ${i}`;
+        cell2.textContent = formattedDate;
+    }
+}
+</script>
+
+</body>
+</html>
